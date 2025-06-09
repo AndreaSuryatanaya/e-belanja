@@ -4,25 +4,25 @@ import { columns } from "./column";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusCircle } from "lucide-react";
-import { getCategories } from "./lib/data";
+import { getLocations } from "./lib/data";
 
-export default async function CategoriesPage() {
-    const data = await getCategories();
+export default async function LocationsPage() {
+    const data = await getLocations();
 
     return (
         <div className="space-y-4">
             <div className="text-right">
                 <Button size="sm" className="h-8 gap-1" asChild>
-                    <Link href="/dashboard/categories/create">
+                    <Link href="/dashboard/locations/create">
                         <PlusCircle className="h-3.5 w-3.5" />
-                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Category</span>
+                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Location</span>
                     </Link>
                 </Button>
             </div>
             <Card x-chunk="dashboard-06-chunk-0">
                 <CardHeader>
-                    <CardTitle>Categories</CardTitle>
-                    <CardDescription>Manage your categories and view their sales performance.</CardDescription>
+                    <CardTitle>Locations</CardTitle>
+                    <CardDescription>Manage your locations and view their sales performance.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <DataTable columns={columns} data={data} />

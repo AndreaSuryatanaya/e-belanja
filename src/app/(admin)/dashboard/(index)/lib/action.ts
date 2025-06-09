@@ -25,20 +25,3 @@ export async function Logout(_: unknown, formData: FormData): Promise<ActionResu
 
     return redirect("/dashboard/sign-in");
 }
-
-export async function deleteCategory(_: unknown, formData: FormData, id: number): Promise<ActionResult> {
-    try {
-        await prisma.category.delete({
-            where: {
-                id,
-            },
-        });
-    } catch (error) {
-        console.log(error);
-        return {
-            error: "Failed to delete data",
-        };
-    }
-
-    return redirect("/dashboard/categories");
-}

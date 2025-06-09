@@ -1,43 +1,32 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { AlertCircle, ChevronLeft } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ActionResult } from "@/types";
+import { AlertCircle, ChevronLeft } from "lucide-react";
+import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
-
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Category } from "@prisma/client";
-import { postCategory, updateCategory } from "../categories/lib/action";
-
-const initialState: ActionResult = {
-    error: "",
-};
-
-interface FormCategoryProps {
-    type?: "ADD" | "EDIT";
-    data?: Category | null;
-}
+import { postBrand } from "../../lib/actions";
+import { ActionResult } from "@/types";
 
 function SubmitButton() {
     const { pending } = useFormStatus();
 
     return (
         <Button type="submit" size="sm" disabled={pending}>
-            {pending ? "Loading..." : "Save Category"}
+            {pending ? "Loading..." : "Save Brand"}
         </Button>
     );
 }
 
-export default function FormCategory({ data = null, type = "ADD" }: FormCategoryProps) {
-    const updateCategoryWithId = (_: unknown, formData: FormData) => updateCategory(_, formData, data?.id);
+const initialState: ActionResult = {
+    error: "",
+};
 
-    const [state, formAction] = useFormState(type === "ADD" ? postCategory : updateCategoryWithId, initialState);
-
+export default function FormBrand() {
+    const [state, formAction] = useFormState(postBrand, initialState);
     return (
         <form action={formAction}>
             <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -50,7 +39,7 @@ export default function FormCategory({ data = null, type = "ADD" }: FormCategory
                             </Link>
                         </Button>
                         <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                            Category Controller
+                            Brand Controller
                         </h1>
                         <div className="hidden items-center gap-2 md:ml-auto md:flex">
                             <Button variant="outline" size="sm">
@@ -63,7 +52,7 @@ export default function FormCategory({ data = null, type = "ADD" }: FormCategory
                         <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                             <Card x-chunk="dashboard-07-chunk-0" className="w-[500px]">
                                 <CardHeader>
-                                    <CardTitle>Category Details</CardTitle>
+                                    <CardTitle>Brand Details</CardTitle>
                                     <CardDescription>
                                         Lipsum dolor sit amet, consectetur adipiscing elit
                                     </CardDescription>
@@ -80,13 +69,11 @@ export default function FormCategory({ data = null, type = "ADD" }: FormCategory
                                     <div className="grid gap-6">
                                         <div className="grid gap-3">
                                             <Label htmlFor="name">Name</Label>
-                                            <Input
-                                                id="name"
-                                                type="text"
-                                                name="name"
-                                                className="w-full"
-                                                defaultValue={data?.name}
-                                            />
+                                            <Input id="name" type="text" name="name" className="w-full" />
+                                        </div>
+                                        <div className="grid gap-3">
+                                            <Label htmlFor="logo">Logo</Label>
+                                            <Input id="logo" type="file" name="image" className="w-full" />
                                         </div>
                                         {/* <div className="grid gap-3">
                         <Label htmlFor="description">Description</Label>
@@ -346,7 +333,7 @@ export default function FormCategory({ data = null, type = "ADD" }: FormCategory
                         <Button variant="outline" size="sm">
                             Discard
                         </Button>
-                        <Button size="sm">Save Product</Button>
+                        <Button size="sm">Save Brand</Button>
                     </div>
                 </div>
             </div>

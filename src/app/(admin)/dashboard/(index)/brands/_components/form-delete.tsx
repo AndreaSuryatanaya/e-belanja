@@ -1,11 +1,8 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { ActionResult } from "@/types";
 import { Trash } from "lucide-react";
-import React from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { deleteCategory } from "../lib/action";
+import { deleteBrandById } from "../lib/actions";
+import { ActionResult } from "@/types";
 
 const initialState: ActionResult = {
     error: "",
@@ -26,10 +23,8 @@ function SubmitButton() {
 }
 
 export default function FormDelete({ id }: FormDeleteProps) {
-    const deleteCategoryWithId = (_: unknown, formData: FormData) => deleteCategory(_, formData, id);
-
-    const [state, formAction] = useFormState(deleteCategoryWithId, initialState);
-
+    const deleteBrandWithId = (_: unknown, formData: FormData) => deleteBrandById(_, formData, id);
+    const [state, formAction] = useFormState(deleteBrandWithId, initialState);
     return (
         <form action={formAction}>
             <SubmitButton />
